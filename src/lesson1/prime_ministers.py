@@ -22,14 +22,17 @@ PRIME_MINISTERS = [
     ('あべ', 'しんぞう'),
 ]
 
+# *****修正開始*****
 # 空リスト作成
-GET_AS_STRING = []
-GET_WITH_REVERSE_ORDER = []
-GET_PRIME_MINISTERS_OF_MIN_LENGTH = []
+'''GET_AS_STRING = []
+   GET_WITH_REVERSE_ORDER = []
+   GET_PRIME_MINISTERS_OF_MIN_LENGTH = []
 
-# 処理用
-List1 = []
-List2 = {}
+   # 処理用
+   list1 = []
+   list2 = {}
+'''
+# *****修正終了*****
 
 
 class PrimeMinisters(object):
@@ -43,8 +46,16 @@ class PrimeMinisters(object):
         '''Lesson1-1
         '''
         # リスト内の文字列に空白を追加し、リストに追加
-        for K, V in PRIME_MINISTERS:
+# *****修正開始*****
+        '''for K, V in PRIME_MINISTERS:
             GET_AS_STRING.append(K + " " + V)
+        '''
+        # 空リスト作成
+        GET_AS_STRING = []
+
+        for p_m in PRIME_MINISTERS:
+            GET_AS_STRING.append(p_m[0] + " " + p_m[1])
+# *****修正終了*****
 
         return GET_AS_STRING
 
@@ -60,36 +71,84 @@ class PrimeMinisters(object):
         '''Lesson1-3
         '''
         # 名前の文字数が名字の文字数より多い場合、リストに追加
-        for k, v in PRIME_MINISTERS:
-            if len(k) < len(v):
-                GET_WITH_REVERSE_ORDER.append((k, v))
+# *****修正開始*****
+        '''for k, v in PRIME_MINISTERS:
+               if len(k) < len(v):
+                   GET_WITH_REVERSE_ORDER.append((k, v))
+        '''
+        # 空リスト作成
+        GET_WITH_REVERSE_ORDER = []
+
+        for p_m in PRIME_MINISTERS:
+            if len(p_m[0]) < len(p_m[1]):
+                GET_WITH_REVERSE_ORDER.append((p_m[0], p_m[1]))
+# *****修正終了*****
 
         return GET_WITH_REVERSE_ORDER
 
     def get_prime_ministers_of_min_length(self):
         '''Lesson1-4
         '''
+# *****修正開始*****
+        '''# 文字数カウント用
+           COUNT = 0
+
+           # 最大文字数取得
+           for k, v in PRIME_MINISTERS:
+               if COUNT < (len(k) + len(v)):
+                   COUNT = (len(k) + len(v))
+
+           # 最大文字数対象をリストに追加
+           for k, v in PRIME_MINISTERS:
+               if COUNT == (len(k) + len(v)):
+                   GET_∂PRIME_MINISTERS_OF_MIN_LENGTH.append((k, v))
+        '''
+        # 空リスト作成
+        GET_PRIME_MINISTERS_OF_MIN_LENGTH = []
         # 文字数カウント用
-        COUNT = 0
+        COUNT = 100
 
-        # 最大文字数取得
-        for k, v in PRIME_MINISTERS:
-            if COUNT < (len(k) + len(v)):
-                COUNT = (len(k) + len(v))
+        # 最小文字数取得
+        for p_m in PRIME_MINISTERS:
+            if COUNT > (len(p_m[0]) + len(p_m[1])):
+                COUNT = (len(p_m[0]) + len(p_m[1]))
 
-        # 最大文字数対象をリストに追加
-        for k, v in PRIME_MINISTERS:
-            if COUNT == (len(k) + len(v)):
-                GET_PRIME_MINISTERS_OF_MIN_LENGTH.append((k, v))
+        # 最小文字数対象をリストに追加
+        for p_m in PRIME_MINISTERS:
+            if COUNT == (len(p_m[0]) + len(p_m[1])):
+                GET_PRIME_MINISTERS_OF_MIN_LENGTH.append((p_m[0], p_m[1]))
+# *****修正終了*****
 
         return GET_PRIME_MINISTERS_OF_MIN_LENGTH
 
     def remove_duplication(self):
         '''Lesson1-5
         '''
-        for k, v in PRIME_MINISTERS:
-            List1.append(k[0:1])
-        List2.update(collections.Counter(List1).most_common(None))
+# *****修正開始*****
+        '''for k, v in PRIME_MINISTERS:
+               list1.append(k[0:1])
+        '''
+        # 処理用
+        list1 = []
+        list2 = {}
+        list3 = []
+
+        # 対象の苗字から１文字取得
+        for p_m in PRIME_MINISTERS:
+            list1.append(p_m[0][0:1])
+
+        # 重複対象の集約
+        list2 = dict(collections.Counter(list1).most_common(None))
+
+        # 重複しない対象を抽出
+        for l2 in list2.items():
+            if l2[1] == 1:
+                for p_m in PRIME_MINISTERS:
+                    if l2[0] == (p_m[0][0:1]):
+                        list3.append((p_m[0], p_m[1]))
+
+        return list3
+# *****修正終了*****
 
 
 if __name__ == '__main__':

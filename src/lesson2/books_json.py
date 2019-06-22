@@ -19,10 +19,19 @@ class BooksJson(object):
     def get_items(self):
         '''Lesson2-1
         '''
-        # 選択したファイルを読み込み
-        OPEN_FILE = open(self.json_path, 'r')
-        # データを格納
-        self.items = json.load(OPEN_FILE)
+        try:
+            # 選択したファイルを読み込み
+            OPEN_FILE = open(self.json_path, 'r')
+            # データを格納
+            self.items = json.load(OPEN_FILE)
+            # 開いたファイルを閉じる
+            OPEN_FILE.close()
+
+        except ValueError:
+            # 開いたファイルを閉じる
+            OPEN_FILE.close()
+            # 強制終了
+            exit()
 
     def delete_unnecessary_data(self):
         '''Lesson2-2
@@ -116,51 +125,52 @@ class BooksJson(object):
             i += 1
 
 
-'''初期宣言
-'''
-Select = 0
-Name_A = "芥川龍之介"
-Name_N = "夏目漱石"
-Name_M = "宮沢賢治"
-json_data = os.path.dirname(__file__)
+if __name__ == '__main__':
+    '''初期宣言
+    '''
+    Select = 0
+    Name_A = "芥川龍之介"
+    Name_N = "夏目漱石"
+    Name_M = "宮沢賢治"
+    json_data = os.path.dirname(__file__)
 
-# インスタンス化
-books = BooksJson(object)
+    # インスタンス化
+    books = BooksJson(object)
 
-'''初期処理
-'''
-# 読み込むファイルを指定
-print("どの文字に追加したいですか？")
-Select = int(input("0:{0},1:{1},2{2}>".format(Name_A,
-                                              Name_N,
-                                              Name_M)))
+    '''初期処理
+    '''
+    # 読み込むファイルを指定
+    print("どの文字に追加したいですか？")
+    Select = int(input("0:{0},1:{1},2{2}>".format(Name_A,
+                                                  Name_N,
+                                                  Name_M)))
 
-# 読み込みファイルのパスを作成
-if Select == 0:
-    json_path = json_data + "/input/" + Name_A + ".json"
-    OUTPUT = json_data + "/input/" + Name_A + "/"
-elif Select == 1:
-    json_path = json_data + "/input/" + Name_N + ".json"
-    OUTPUT = json_data + "/input/" + Name_N + "/"
-elif Select == 2:
-    json_path = json_data + "/input/" + Name_M + ".json"
-    OUTPUT = json_data + "/input/" + Name_M + "/"
-else:
-    print("エラー1")
+    # 読み込みファイルのパスを作成
+    if Select == 0:
+        json_path = json_data + "/input/" + Name_A + ".json"
+        OUTPUT = json_data + "/input/" + Name_A + "/"
+    elif Select == 1:
+        json_path = json_data + "/input/" + Name_N + ".json"
+        OUTPUT = json_data + "/input/" + Name_N + "/"
+    elif Select == 2:
+        json_path = json_data + "/input/" + Name_M + ".json"
+        OUTPUT = json_data + "/input/" + Name_M + "/"
+    else:
+        print("エラー1")
 
-'''主処理
-'''
-# path設定
-books.__init__(json_path)
-# get_items呼び出し
-print("課題2-1")
-books.get_items()
-# delete_unnecessary_data呼び出し
-print("課題2-2")
-books.delete_unnecessary_data()
-# dd_elapsed_years呼び出し
-print("課題2-3")
-books.add_elapsed_years()
-# export呼び出し
-print("課題2-4")
-books.export()
+    '''主処理
+    '''
+    # path設定
+    books.__init__(json_path)
+    # get_items呼び出し
+    print("課題2-1")
+    books.get_items()
+    # delete_unnecessary_data呼び出し
+    print("課題2-2")
+    books.delete_unnecessary_data()
+    # dd_elapsed_years呼び出し
+    print("課題2-3")
+    books.add_elapsed_years()
+    # export呼び出し
+    print("課題2-4")
+    books.export()
