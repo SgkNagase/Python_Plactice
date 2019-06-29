@@ -21,15 +21,11 @@ class BooksJson(object):
         '''
         try:
             # 選択したファイルを読み込み
-            OPEN_FILE = open(self.json_path, 'r')
-            # データを格納
-            self.items = json.load(OPEN_FILE)
-            # 開いたファイルを閉じる
-            OPEN_FILE.close()
+            with open(self.json_path, 'r') as f:
+                # データを格納
+                self.items = json.load(f)
 
         except ValueError:
-            # 開いたファイルを閉じる
-            OPEN_FILE.close()
             # 強制終了
             exit()
 
